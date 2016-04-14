@@ -39,7 +39,7 @@ class srDclContentImporterConfigFormGUI extends ilPropertyFormGUI
         $this->lng = $lng;
         $this->pl = ilDclContentImporterPlugin::getInstance();
         $this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
-        $this->setTitle('PHBern Arbeitenarchiv');
+        $this->setTitle('DataCollection Content Importer');
         $this->initForm();
     }
 
