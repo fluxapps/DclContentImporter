@@ -1,18 +1,17 @@
 <?php
 require_once('./Services/Form/classes/class.ilPropertyFormGUI.php');
-require_once('./Customizing/global/plugins/Services/Cron/CronHook/PHBernArbeitenarchivImporter/classes/Helper/class.srPHBernArbeitenarchivImporterMultiLineInputGUI.php');
-require_once('./Customizing/global/plugins/Services/Cron/CronHook/PHBernArbeitenarchivImporter/classes/Config/class.srPHBernArbeitenarchivImporterConfig.php');
+require_once('./Customizing/global/plugins/Services/Cron/CronHook/DclContentImporter/classes/Helper/class.srDclContentImporterMultiLineInputGUI.php');
+require_once('./Customizing/global/plugins/Services/Cron/CronHook/DclContentImporter/classes/Config/class.srDclContentImporterConfig.php');
 
-/**
- * Class srPHBernArbeitenarchivImporterConfigFormGUI
+/** Class srDclContentImporterConfigFormGUI
  *
  * @author Michael Herren <mh@studer-raimann.ch>
  */
-class srPHBernArbeitenarchivImporterConfigFormGUI extends ilPropertyFormGUI
+class srDclContentImporterConfigFormGUI extends ilPropertyFormGUI
 {
 
     /**
-     * @var srPHBernArbeitenarchivConfigGUI
+     * @var ilDclContentImporterConfigGUI
      */
     protected $parent_gui;
     /**
@@ -20,7 +19,7 @@ class srPHBernArbeitenarchivImporterConfigFormGUI extends ilPropertyFormGUI
      */
     protected $ctrl;
     /**
-     * @var ilPHBernArbeitenarchivImporterPlugin
+     * @var ilDclContentImporterPlugin
      */
     protected $pl;
     /**
@@ -30,15 +29,15 @@ class srPHBernArbeitenarchivImporterConfigFormGUI extends ilPropertyFormGUI
 
 
     /**
-     * @param ilPHBernArbeitenarchivImporterConfigGUI $parent_gui
+     * @param ilDclContentImporterConfigGUI $parent_gui
      */
-    public function __construct(ilPHBernArbeitenarchivImporterConfigGUI $parent_gui)
+    public function __construct(ilDclContentImporterConfigGUI $parent_gui)
     {
         global $ilCtrl, $lng;
         $this->parent_gui = $parent_gui;
         $this->ctrl = $ilCtrl;
         $this->lng = $lng;
-        $this->pl = ilPHBernArbeitenarchivImporterPlugin::getInstance();
+        $this->pl = ilDclContentImporterPlugin::getInstance();
         $this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
         $this->setTitle('PHBern Arbeitenarchiv');
         $this->initForm();
@@ -60,20 +59,20 @@ class srPHBernArbeitenarchivImporterConfigFormGUI extends ilPropertyFormGUI
     {
         global $rbacreview, $ilUser;
 
-        $multiinput = new srPHBernArbeitenarchivImporterMultiLineInputGUI("DataCollections", srPHBernArbeitenarchivImporterConfig::F_DCL_CONFIG);
+        $multiinput = new srDclContentImporterMultiLineInputGUI("DataCollections", srDclContentImporterConfig::F_DCL_CONFIG);
         $multiinput->setInfo("DataCollection-Ref-ID, DataCollection-Table-ID, Import-File, Remove old entries");
         $multiinput->setTemplateDir($this->pl->getDirectory());
 
-        $ref_id_item = new ilTextInputGUI('Datacollection Ref-ID', srPHBernArbeitenarchivImporterConfig::F_DCL_REF_ID);
+        $ref_id_item = new ilTextInputGUI('Datacollection Ref-ID', srDclContentImporterConfig::F_DCL_REF_ID);
         $multiinput->addInput($ref_id_item);
 
-        $table_id_item = new ilTextInputGUI('Datacollection Table-ID', srPHBernArbeitenarchivImporterConfig::F_DCL_TABLE_ID);
+        $table_id_item = new ilTextInputGUI('Datacollection Table-ID', srDclContentImporterConfig::F_DCL_TABLE_ID);
         $multiinput->addInput($table_id_item);
 
-        $import_file = new ilTextInputGUI('Import-File', srPHBernArbeitenarchivImporterConfig::F_DCL_IMPORT_FILE);
+        $import_file = new ilTextInputGUI('Import-File', srDclContentImporterConfig::F_DCL_IMPORT_FILE);
         $multiinput->addInput($import_file);
         
-        $remove_old_entries = new ilCheckboxInputGUI('Remove old entries', srPHBernArbeitenarchivImporterConfig::F_DCL_REMOVE_OLD_ENTRIES);
+        $remove_old_entries = new ilCheckboxInputGUI('Remove old entries', srDclContentImporterConfig::F_DCL_REMOVE_OLD_ENTRIES);
         $remove_old_entries->setValue(1);
         $multiinput->addInput($remove_old_entries);
 
@@ -103,7 +102,7 @@ class srPHBernArbeitenarchivImporterConfigFormGUI extends ilPropertyFormGUI
     {
         if (self::checkItem($item)) {
             $key = $item->getPostVar();
-            $array[$key] = srPHBernArbeitenarchivImporterConfig::get($key);
+            $array[$key] = srDclContentImporterConfig::getConfigValue($key);
             if (self::checkForSubItem($item)) {
                 foreach ($item->getSubItems() as $subitem) {
                     $this->getValuesForItem($subitem, $array);
@@ -137,7 +136,7 @@ class srPHBernArbeitenarchivImporterConfigFormGUI extends ilPropertyFormGUI
         if (self::checkItem($item)) {
             $key = $item->getPostVar();
 
-            srPHBernArbeitenarchivImporterConfig::set($key, $this->getInput($key));
+            srDclContentImporterConfig::set($key, $this->getInput($key));
             if (self::checkForSubItem($item)) {
                 foreach ($item->getSubItems() as $subitem) {
                     $this->saveValueForItem($subitem);

@@ -2,23 +2,23 @@
 
 require_once './Services/Cron/classes/class.ilCronJob.php';
 require_once './Services/Cron/classes/class.ilCronJobResult.php';
-require_once(dirname(dirname(__FILE__)) . '/class.ilPHBernArbeitenarchivImporterPlugin.php');
+require_once(dirname(dirname(__FILE__)) . '/class.ilDclContentImporterPlugin.php');
 
 require_once ('./Modules/DataCollection/classes/class.ilObjDataCollection.php');
 
 /**
- * Class srPHBernArbeitenarchivImporterCron
+ * Class srDclContentImporterCron
  *
  * @author Michael Herren
  */
-class srPHBernArbeitenarchivImporterCron extends ilCronJob
+class srDclContentImporterCron extends ilCronJob
 {
 
-    const CRON_ID = 'sr_phbern_arbeitenarchiv_importer';
+    const CRON_ID = 'sr_dcl_importer';
     const CSV_DELIMITER = ";";
 
     /**
-     * @var  ilPHBernArbeitenarchivImporterPlugin
+     * @var  ilDclContentImporterPlugin
      */
     protected $pl;
     /**
@@ -35,20 +35,20 @@ class srPHBernArbeitenarchivImporterCron extends ilCronJob
     {
         global $ilDB, $ilLog;
         $this->db = $ilDB;
-        $this->pl = ilPHBernArbeitenarchivImporterPlugin::getInstance();
+        $this->pl = ilDclContentImporterPlugin::getInstance();
         $this->log = $ilLog;
     }
 
 
     public function getTitle()
     {
-        return "VSPH imports for Arbeitenarchiv";
+        return "Imports CSV into DataCollections";
     }
 
 
     public function getDescription()
     {
-        return "Load data for Arbeitenarchiv-DataCollection";
+        return "Imports data for DataCollections";
     }
 
 
@@ -101,7 +101,7 @@ class srPHBernArbeitenarchivImporterCron extends ilCronJob
     public function run()
     {
         global $ilLog;
-        $collections = $this->pl->getConfig(srPHBernArbeitenarchivImporterConfig::F_DCL_CONFIG);
+        $collections = $this->pl->getConfig(srDclContentImporterConfig::F_DCL_CONFIG);
 
         $result = new ilCronJobResult();
         if(is_array($collections) && count($collections) > 0) {
@@ -120,10 +120,10 @@ class srPHBernArbeitenarchivImporterCron extends ilCronJob
         global $ilUser;
 
         // get properties
-        $file = $collection[srPHBernArbeitenarchivImporterConfig::F_DCL_IMPORT_FILE];
-        $data_collection = $collection[srPHBernArbeitenarchivImporterConfig::F_DCL_REF_ID];
-        $table_id = $collection[srPHBernArbeitenarchivImporterConfig::F_DCL_TABLE_ID];
-        $delete_old_entries = $collection[srPHBernArbeitenarchivImporterConfig::F_DCL_REMOVE_OLD_ENTRIES];
+        $file = $collection[srDclContentImporterConfig::F_DCL_IMPORT_FILE];
+        $data_collection = $collection[srDclContentImporterConfig::F_DCL_REF_ID];
+        $table_id = $collection[srDclContentImporterConfig::F_DCL_TABLE_ID];
+        $delete_old_entries = $collection[srDclContentImporterConfig::F_DCL_REMOVE_OLD_ENTRIES];
 
         ilDclCache::resetCache();
 

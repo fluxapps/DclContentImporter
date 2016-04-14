@@ -2,11 +2,11 @@
 require_once('./Services/ActiveRecord/class.ActiveRecord.php');
 
 /**
- * Class srPHBernArbeitenarchivImporterConfig
+ * Class srDclContentImporterConfig
  *
  * @author Michael Herren <mh@studer-raimann.ch>
  */
-class srPHBernArbeitenarchivImporterConfig extends ActiveRecord
+class srDclContentImporterConfig extends ActiveRecord
 {
     const F_DCL_CONFIG = 'dcl_config';
     const F_DCL_REF_ID = 'dcl_ref_id';
@@ -52,7 +52,7 @@ class srPHBernArbeitenarchivImporterConfig extends ActiveRecord
      *
      * @return string
      */
-    public static function get($name)
+    public static function getConfigValue($name)
     {
         if ( ! isset(self::$cache_loaded[$name])) {
             $obj = self::find($name);
@@ -90,7 +90,7 @@ class srPHBernArbeitenarchivImporterConfig extends ActiveRecord
 
     public static function returnDbTableName()
     {
-        return 'sr_aarchivimp_c';
+        return 'sr_dcl_importer_c';
     }
 
 

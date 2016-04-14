@@ -1,20 +1,20 @@
 <?php
 include_once("./Services/Cron/classes/class.ilCronHookPlugin.php");
-require_once(dirname(__FILE__) . '/Crons/class.srPHBernArbeitenarchivImporterCron.php');
-require_once(dirname(__FILE__) . '/Config/class.srPHBernArbeitenarchivImporterConfig.php');
+require_once(dirname(__FILE__) . '/Crons/class.srDclContentImporterCron.php');
+require_once(dirname(__FILE__) . '/Config/class.srDclContentImporterConfig.php');
 
 require_once('./Services/ActiveRecord/class.ActiveRecord.php');
 
 /**
- * Class ilPHBernArbeitenarchivImporterPlugin
+ * Class ilDclContentImporterPlugin
  *
  * @author Michael Herren <mh@studer-raimann.ch>
  */
-class ilPHBernArbeitenarchivImporterPlugin extends ilCronHookPlugin
+class ilDclContentImporterPlugin extends ilCronHookPlugin
 {
 
     /**
-     * @var ilPHBernArbeitenarchivImporterPlugin
+     * @var ilDclContentImporterPlugin
      */
     protected static $instance;
 
@@ -25,7 +25,7 @@ class ilPHBernArbeitenarchivImporterPlugin extends ilCronHookPlugin
 
 
     /**
-     * @return ilPHBernArbeitenarchivImporterPlugin
+     * @return ilDclContentImporterPlugin
      */
     public static function getInstance()
     {
@@ -44,7 +44,7 @@ class ilPHBernArbeitenarchivImporterPlugin extends ilCronHookPlugin
     {
         if (self::$cron_instances === null) {
             self::$cron_instances = array(
-                srPHBernArbeitenarchivImporterCron::CRON_ID => new srPHBernArbeitenarchivImporterCron()
+                srDclContentImporterCron::CRON_ID => new srDclContentImporterCron()
             );
         }
 
@@ -58,7 +58,7 @@ class ilPHBernArbeitenarchivImporterPlugin extends ilCronHookPlugin
      */
     public function getConfig($key)
     {
-        return srPHBernArbeitenarchivImporterConfig::get($key);
+        return srDclContentImporterConfig::getConfigValue($key);
     }
 
 
@@ -74,7 +74,7 @@ class ilPHBernArbeitenarchivImporterPlugin extends ilCronHookPlugin
     /**
      * @param $a_job_id
      *
-     * @return srPHBernArbeitenarchivImporterCron
+     * @return srDclContentImporterCron
      */
     public function getCronJobInstance($a_job_id)
     {
@@ -92,7 +92,7 @@ class ilPHBernArbeitenarchivImporterPlugin extends ilCronHookPlugin
      */
     public function getPluginName()
     {
-        return 'PHBernArbeitenarchivImporter';
+        return 'DclContentImporter';
     }
 
 }

@@ -3,11 +3,11 @@ require_once("./Services/Form/classes/class.ilFormPropertyGUI.php");
 
 
 /**
- * Class srPHBernArbeitenarchivImporterMultiLineInputGUI
+ * Class srDclContentImporterMultiLineInputGUI
  *
  * @author Michael Herren <mh@studer-raimann.ch>
  */
-class srPHBernArbeitenarchivImporterMultiLineInputGUI extends ilFormPropertyGUI {
+class srDclContentImporterMultiLineInputGUI extends ilFormPropertyGUI {
 
 	const HOOK_IS_LINE_REMOVABLE = "hook_is_line_removable";
 	const HOOK_IS_INPUT_DISABLED = "hook_is_disabled";
