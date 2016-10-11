@@ -154,7 +154,7 @@ class srDclContentImporterMultiLineInputGUI extends ilFormPropertyGUI {
 	/**
 	 * @param bool $a_multi
 	 */
-	public function setMulti($a_multi) {
+	public function setMulti($a_multi, $a_sortable = false, $a_addremove = true) {
 		$this->multi = $a_multi;
 	}
 
