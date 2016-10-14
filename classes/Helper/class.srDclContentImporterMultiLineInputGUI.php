@@ -235,8 +235,10 @@ class srDclContentImporterMultiLineInputGUI extends ilFormPropertyGUI {
 
 		// validate
 		foreach ($this->inputs as $input_key => $inputs) {
-			if (! $inputs->checkInput()) {
-				$valid = false;
+			foreach ($_POST[$this->getPostVar()] as $subitem) {
+				if ($inputs->getRequired() && $subitem[$inputs->getPostVar()] == "") {
+					$valid = false;
+				}
 			}
 		}
 
