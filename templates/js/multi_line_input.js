@@ -9,6 +9,7 @@
 
 			var element_config = element_config;
 			var element = this;
+			var limit = options.limit;
 			var counter = 0;
             var clone_line = $(this).find('.multi_input_line').first();
             var empty_id = "empty";
@@ -34,16 +35,21 @@
 				var init = init || false;
 				var $line = line;
 
-				$(line).find('.add_button').on('click', function (e) {
-					var new_line = clone_line.clone();
-                    new_line.show();
-                    $(new_line).addClass("multi_input_line");
 
-					setup_line(new_line);
-					$(element).append(new_line);
-					$(element).change();
-                    $(document).trigger('multi_line_add_button', [$line, new_line]);
-					return false;
+
+				$(line).find('.add_button').on('click', function (e) {
+					var $length = $('.multi_input_line').size();
+					if (limit == 0 || $length < limit) {
+						var new_line = clone_line.clone();
+						new_line.show();
+						$(new_line).addClass("multi_input_line");
+
+						setup_line(new_line);
+						$(element).append(new_line);
+						$(element).change();
+						$(document).trigger('multi_line_add_button', [$line, new_line]);
+						return false;
+					}
 				});
 
 				$(line).find('.remove_button').on('click', function (e) {

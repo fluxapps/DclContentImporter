@@ -48,6 +48,28 @@ class srDclContentImporterMultiLineInputGUI extends ilFormPropertyGUI {
 	 * @var bool
 	 */
 	protected $show_label = false;
+	/**
+	 * @var
+	 */
+	protected $limit = 0;
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getLimit() {
+		return $this->limit;
+	}
+
+
+	/**
+	 * set a limit of possible lines, 0 = no limit
+	 *
+	 * @param mixed $limit
+	 */
+	public function setLimit($limit) {
+		$this->limit = $limit;
+	}
 
 
 	/**
@@ -405,7 +427,9 @@ class srDclContentImporterMultiLineInputGUI extends ilFormPropertyGUI {
 		if ($this->getMulti()) {
 			$output = '<div id="' . $this->getFieldId() . '" class="multi_line_input">' . $output . '</div>';
 			$tpl->addJavascript($this->getTemplateDir() . '/templates/js/multi_line_input.js');
-			$output .= '<script type="text/javascript">$("#' . $this->getFieldId() . '").multi_line_input(' . json_encode($this->input_options)
+			$output .= '<script type="text/javascript">$("#' . $this->getFieldId() . '").multi_line_input('
+				. json_encode($this->input_options) . ', '
+				. json_encode(array('limit' => $this->limit))
 				. ')</script>';
 		}
 
